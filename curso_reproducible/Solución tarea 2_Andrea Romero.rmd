@@ -1,0 +1,138 @@
+---
+title: "Solución tarea 2"
+author: "Andrea Romero Magaña"
+date: "13/10/2020"
+output: html_document
+---
+
+### **Regresión escalonada**
+
+####### La regresión escalonada (“stepwise regression”) es un procedimiento que pretende construir un modelo de regresión a partir de un conjunto de variables predictoras candidatas, ingresando y eliminando predictores de manera escalonada en el modelo hasta que no haya una razón “estadísticamente válida" para ingresar o quitar más variables. El objetivo de esta tarea es evaluar la robustez estadística de dicho método.
+
+#### **Ejercicio 1**
+####### Primero, se corrió `source()` para cargar la función `replicar_reg_scal()` en el ambiente de trabajo. Esta función simula datos con múltiples variables predictoras con un número de variables definidas (`nvars`), los cuales pueden ser analizados con una regresión escalonada. 
+
+
+```{r, echo=TRUE}
+# se corre en el repositorio clonado local
+source("C:/Users/andrearomero/Documents/Andrea - Img, doc, etc/2020/CICLO II-2020/Herramientas prácticas para investigación reproducible/6_Reportes dinámicos/curso_reproducible/scripts/replicar_reg_scal.R")
+```
+
+####### Posteriormente, se calculó la proporción de réplicas que produjeron al menos una variable con un efecto significativo (i.e. proporción de falsos positivos) para números de variables **10, 20, 50 y 100** (se varía el argumento `nvars`) con un alfa de **0.05**:
+
+####### Proporción de falsos positivos para `nvars = 10` 
+
+```{r}
+# Se corre la función con número de variables (nvars) igual a 10. El argumento itr es el número de iteraciones o réplicas, n es el número de observaciones en cada variable y el alpha es el umbral para definir significancia estadística en los valores de p.
+falsos_positivos1 <- replicar_reg_scal(itr = 100, n = 30, nvars = 10, alfa = 0.05)
+
+falsos_positivos1
+```
+
+####### Proporción de falsos positivos para `nvars = 20` 
+
+```{r}
+# Se corre la función con número de variables (nvars) igual a 20 y alfa de 0.05.
+falsos_positivos2 <- replicar_reg_scal(itr = 100, n = 30, nvars = 20, alfa = 0.05)
+
+falsos_positivos2
+```
+
+####### Proporción de falsos positivos para `nvars = 50` 
+
+```{r}
+# Se corre la función con número de variables (nvars) igual a 50 y alfa de 0.05.
+falsos_positivos3 <- replicar_reg_scal(itr = 100, n = 30, nvars = 50, alfa = 0.05)
+
+falsos_positivos3
+```
+
+####### Proporción de falsos positivos para `nvars = 100` 
+
+```{r}
+# Se corre la función con número de variables (nvars) igual a 100 y alfa de 0.05.
+falsos_positivos4 <- replicar_reg_scal(itr = 100, n = 30, nvars = 100, alfa = 0.05)
+
+falsos_positivos4
+```
+
+####### Se graficó el número de variables vs. la proporción de falsos positivos.
+
+```{r, fig.align = 'center'}
+# Se definen las variables x & y (x = proporcion_de_falsos_positivos; y = numero_de_variables)
+
+proporcion_de_falsos_positivos <- c(falsos_positivos1, falsos_positivos2, falsos_positivos3, falsos_positivos4)
+
+numero_de_variables <- c(10, 20, 50, 100)
+
+# Se corre la función plot para hacer un gráfico de dispersión
+
+plot(numero_de_variables, proporcion_de_falsos_positivos, ylab = "Número de variables", xlab= "Proporción de falsos positivos", main="Gráfica 1: Diagrama de dispersión con alfa de 0.05")
+
+```
+
+#### **Ejercicio 2**
+####### Se repitió los ejercicios anteriores, pero esta vez variando el argumento `alfa` a **0.02**:
+
+####### Proporción de falsos positivos para `nvars = 10` 
+
+```{r}
+# Se corre la función con número de variables (nvars) igual a 10 y alfa de 0.02.
+falsos_positivos5 <- replicar_reg_scal(itr = 100, n = 30, nvars = 10, alfa = 0.02)
+
+falsos_positivos5
+```
+
+####### Proporción de falsos positivos para `nvars = 20` 
+
+```{r}
+# Se corre la función con número de variables (nvars) igual a 20 y alfa de 0.02.
+falsos_positivos6 <- replicar_reg_scal(itr = 100, n = 30, nvars = 20, alfa = 0.02)
+
+falsos_positivos6
+```
+
+####### Proporción de falsos positivos para `nvars = 50` 
+
+```{r}
+# Se corre la función con número de variables (nvars) igual a 50 y alfa de 0.02.
+falsos_positivos7 <- replicar_reg_scal(itr = 100, n = 30, nvars = 50, alfa = 0.02)
+
+falsos_positivos7
+```
+
+####### Proporción de falsos positivos para `nvars = 100` 
+
+```{r}
+# Se corre la función con número de variables (nvars) igual a 100 y alfa de 0.02. 
+falsos_positivos8 <- replicar_reg_scal(itr = 100, n = 30, nvars = 100, alfa = 0.02)
+
+falsos_positivos8
+```
+
+####### Se graficó nuevamente el número de variables vs. la proporción de falsos positivos.
+
+```{r, fig.align = 'center'}
+# Se definen las variables x & y (x = proporcion_de_falsos_positivos; y = numero_de_variables)
+proporcion_de_falsos_positivos <- c(falsos_positivos5, falsos_positivos6, falsos_positivos7, falsos_positivos8)
+
+numero_de_variables <- c(10, 20, 50, 100)
+
+# Se corre la función plot para hacer un gráfico de dispersión
+
+plot(numero_de_variables, proporcion_de_falsos_positivos, ylab = "Número de variables", xlab= "Proporción de falsos positivos", main="Gráfica 2: Diagrama de dispersión con alfa de 0.02")
+```
+
+#### **Organismo favorito**
+
+####### ¡Me encantan estos animales! (Nota: no soy herpetóloga jaja)
+
+<center> ![Reptiles & anfibios](reptiles_anfibios.jpg) </center>
+
+&nbsp;
+
+#### *Información de la sesión*
+```{r, echo=FALSE}
+sessionInfo()
+```
+
